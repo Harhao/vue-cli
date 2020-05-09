@@ -37,8 +37,7 @@ module.exports = (api, options) => {
       '--report': `generate report.html to help analyze bundle content`,
       '--report-json': 'generate report.json to help analyze bundle content',
       '--skip-plugins': `comma-separated list of plugin names to skip for this run`,
-      '--watch': `watch for changes`,
-      '--stdin': `close when stdin ends`
+      '--watch': `watch for changes`
     }
   }, async (args, rawArgs) => {
     for (const key in defaults) {
@@ -154,13 +153,6 @@ async function build (args, api, options) {
     modifyConfig(webpackConfig, config => {
       config.watch = true
     })
-  }
-
-  if (args.stdin) {
-    process.stdin.on('end', () => {
-      process.exit(0)
-    })
-    process.stdin.resume()
   }
 
   // Expose advanced stats

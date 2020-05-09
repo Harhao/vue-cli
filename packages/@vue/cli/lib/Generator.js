@@ -1,10 +1,14 @@
 const ejs = require('ejs')
 const debug = require('debug')
 const GeneratorAPI = require('./GeneratorAPI')
+// 安装包管理类
 const PackageManager = require('./util/ProjectPackageManager')
+// 对依赖项进行排序处理
 const sortObject = require('./util/sortObject')
+// 写入文件夹树
 const writeFileTree = require('./util/writeFileTree')
 const inferRootOptions = require('./util/inferRootOptions')
+// 序列化文件路径
 const normalizeFilePaths = require('./util/normalizeFilePaths')
 const runCodemod = require('./util/runCodemod')
 const {
@@ -75,6 +79,7 @@ const ensureEOL = str => {
 }
 
 module.exports = class Generator {
+  // context: 需要生成目录的路径 pkg: package.json的选项，plugins: preset定义的plugin，afterInvokeCbs：调用后的回调函数 ，afterAnyInvokeCbs： 一些调用后的回调函数
   constructor (context, {
     pkg = {},
     plugins = [],
@@ -94,9 +99,9 @@ module.exports = class Generator {
     this.passedAfterInvokeCbs = afterInvokeCbs
     this.afterInvokeCbs = []
     this.afterAnyInvokeCbs = afterAnyInvokeCbs
-    this.configTransforms = {}
-    this.defaultConfigTransforms = defaultConfigTransforms
-    this.reservedConfigTransforms = reservedConfigTransforms
+    this.configTransforms = {} //允许插件怎么定义分出来的配置文件命名
+    this.defaultConfigTransforms = defaultConfigTransforms //允许插件怎么定义分出来的配置文件命名
+    this.reservedConfigTransforms = reservedConfigTransforms //允许插件怎么定义分出来的配置文件命名
     this.invoking = invoking
     // for conflict resolution
     this.depSources = {}
@@ -108,10 +113,11 @@ module.exports = class Generator {
     this.exitLogs = []
 
     // load all the other plugins
+    // 加载所有的插件
     this.allPluginIds = Object.keys(this.pkg.dependencies || {})
       .concat(Object.keys(this.pkg.devDependencies || {}))
       .filter(isPlugin)
-
+    // 获取cli-service插件
     const cliService = plugins.find(p => p.id === '@vue/cli-service')
     const rootOptions = cliService
       ? cliService.options

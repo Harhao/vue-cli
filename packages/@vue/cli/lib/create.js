@@ -7,7 +7,7 @@ const { getPromptModules } = require('./util/createTools')
 const { chalk, error, stopSpinner, exit } = require('@vue/cli-shared-utils')
 const validateProjectName = require('validate-npm-package-name')
 
-async function create (projectName, options) {
+async function create(projectName, options) {
   if (options.proxy) {
     process.env.HTTP_PROXY = options.proxy
   }
@@ -67,7 +67,11 @@ async function create (projectName, options) {
       }
     }
   }
-
+  /**
+   * name: 是要创建的项目名
+   * targetDir: 是要创建目录路径
+   * getPromptModules() 获取了 babel，typescript，pwa，router，vuex， cssPreprocessors，linter，unit，e2e 的 Prompt 的配置信息
+   */
   const creator = new Creator(name, targetDir, getPromptModules())
   await creator.create(options)
 }
