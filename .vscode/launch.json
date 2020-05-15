@@ -12,7 +12,7 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/packages/@vue/cli/bin/vue.js",
-            "args": ["create","demo"]
+            "args": ["create","-d","demo"]
         }
     ]
 }

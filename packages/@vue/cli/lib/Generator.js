@@ -30,7 +30,7 @@ const logTypes = {
   warn: logger.warn,
   error: logger.error
 }
-
+// 默认配置配置文件
 const defaultConfigTransforms = {
   babel: new ConfigTransform({
     file: {
@@ -62,7 +62,7 @@ const defaultConfigTransforms = {
     }
   })
 }
-
+// 
 const reservedConfigTransforms = {
   vue: new ConfigTransform({
     file: {
@@ -122,7 +122,7 @@ module.exports = class Generator {
     const rootOptions = cliService
       ? cliService.options
       : inferRootOptions(pkg)
-
+    //保存@vue/vli-service的options
     this.rootOptions = rootOptions
   }
 

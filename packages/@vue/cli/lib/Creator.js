@@ -85,11 +85,15 @@ module.exports = class Creator extends EventEmitter {
     this.context = process.env.VUE_CLI_CONTEXT = context;
     // 获取preset prompt 和 featurePrompt
     const { presetPrompt, featurePrompt } = this.resolveIntroPrompts();
+    // 怎么获取preset的prompt，通过manually、default、自定义获取
     this.presetPrompt = presetPrompt;
+    // 选择你所需的功能prompt
     this.featurePrompt = featurePrompt;
     // 获取选择完毕之后的prompt，包括安装依赖的方式、是否保存preset、保存的文件名
     this.outroPrompts = this.resolveOutroPrompts();
+    //保存插件中注入的options的prompt
     this.injectedPrompts = [];
+    //保存插件中注入的options选择后的毁掉函数
     this.promptCompleteCbs = [];
     this.afterInvokInvokeCbs = [];
     this.afterAnyInvokeCbs = [];
@@ -143,7 +147,7 @@ module.exports = class Creator extends EventEmitter {
       },
       preset
     );
-
+    //  创建项目时省略默认组件中的新手指导信息
     if (cliOptions.bare) {
       preset.plugins["@vue/cli-service"].bare = true;
     }
@@ -232,7 +236,7 @@ module.exports = class Creator extends EventEmitter {
       // in development, avoid installation process
       await require("./util/setupDevProject")(context);
     } else {
-      await pm.install();
+      // await pm.install();
     }
 
     // run generator
@@ -254,7 +258,7 @@ module.exports = class Creator extends EventEmitter {
     this.emit("creation", { event: "deps-install" });
     log();
     if (!isTestOrDebug) {
-      await pm.install();
+      // await pm.install();
     }
 
     // run complete cbs if any (injected by generators)

@@ -5,6 +5,7 @@ const Creator = require('./Creator')
 const { clearConsole } = require('./util/clearConsole')
 const { getPromptModules } = require('./util/createTools')
 const { chalk, error, stopSpinner, exit } = require('@vue/cli-shared-utils')
+// 验证要创建目录名是否符合要求
 const validateProjectName = require('validate-npm-package-name')
 
 async function create(projectName, options) {
